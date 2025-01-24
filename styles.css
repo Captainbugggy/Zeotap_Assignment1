@@ -1,0 +1,410 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+}
+
+/* Header styles */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(79, 76, 76, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.navbar h1 {
+    color: #0f1307;
+    font-size: 1.5rem;
+}
+
+.toolbar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    position: sticky; /* Makes the toolbar fixed */
+    top: 0; /* Keeps it at the top */
+    background-color: #fff; /* Ensures the toolbar doesn't blend into the page */
+    padding: 1rem; /* Ensure enough space around buttons */
+    z-index: 99; /* To layer it above content */
+}
+
+.toolbar button {
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toolbar button:hover {
+    background-color: #f8f9fa;
+}
+
+/* Adding styles for delete buttons */
+.delete-column-button,
+.delete-row-button {
+    position: absolute;
+    display: none;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.delete-column-button {
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.delete-row-button {
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.cell.header:hover .delete-column-button,
+.row:hover .delete-row-button {
+    display: flex;
+}
+
+.delete-column-button:hover,
+.delete-row-button:hover {
+    background: #d32f2f;
+}
+
+/* Tooltip styles */
+.delete-column-button::after,
+.delete-row-button::after {
+    content: attr(title);
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    display: none;
+}
+
+.delete-column-button:hover::after,
+.delete-row-button:hover::after {
+    display: block;
+}
+
+.delete-column-button::after {
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.delete-row-button::after {
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Main content styles */
+main {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.controls {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+#formulaBar {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Spreadsheet styles */
+#spreadsheet-container {
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+#spreadsheet {
+    display: table;
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+.header-row {
+    display: table-row;
+    background-color: #f8f9fa;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    border: 1px solid #dadce0;
+    padding: 0.5rem;
+    min-width: 100px;
+    position: relative;
+}
+
+.cell.header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cell[contenteditable="true"]:focus {
+    outline: 2px solid #1a73e8;
+    outline-offset: -2px;
+}
+
+/* Resizer styles */
+.resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    cursor: col-resize;
+    background-color: transparent;
+}
+
+.resizer:hover {
+    background-color: #1a73e8;
+}
+
+/* Chart and controls styles */
+.chart {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+}
+
+#chartCanvas {
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+}
+
+/* Save and Load buttons styles */
+.save-load {
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#dataValidationMessage {
+    color: #d93025;
+    margin: 0.5rem 0;
+    min-height: 1.5rem;
+}
+
+#testResults {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+    
+    .toolbar {
+        flex-direction: column;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .cell {
+        min-width: 80px;
+    }
+}
+
+/* Row selection and hover effects */
+.row {
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.row.selected-row {
+    background-color: rgba(26, 115, 232, 0.1);
+}
+
+.row.selected-row .cell {
+    border-color: #1a73e8;
+}
+
+.row:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.delete-row-button {
+    opacity: 0;
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.row:hover .delete-row-button {
+    opacity: 1;
+}
+
+.delete-row-button:hover {
+    background: #c82333;
+}
+
+.toolbar button[title="Delete Selected"] {
+    background-color: #fff;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+
+.toolbar button[title="Delete Selected"]:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Update the existing toolbar button styles */
+.toolbar button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #dadce0;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    color: #3c4043;
+    transition: all 0.2s ease;
+}
+
+.toolbar button:hover {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+}
+
+.toolbar button svg {
+    width: 16px;
+    height: 16px;
+}
+/* Drag handle styles */
+.drag-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 8px;
+    height: 8px;
+    background: #1a73e8;
+    cursor: crosshair;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.cell:hover .drag-handle {
+    opacity: 1;
+}
+
+/* Drag source cell */
+.drag-source {
+    background-color: rgba(26, 115, 232, 0.1);
+}
+
+/* Drag overlay */
+.drag-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    cursor: crosshair;
+}
+
+/* Cell highlight during drag */
+.cell-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(26, 115, 232, 0.1);
+    border: 2px solid #1a73e8;
+    pointer-events: none;
+}
+
+/* Selection styles */
+.cell.selected {
+    background-color: rgba(26, 115, 232, 0.1);
+    border: 2px solid #1a73e8;
+}
+
+/* Ensure proper positioning for cells */
+.cell {
+    position: relative;
+}
+.drag-start {
+    background-color: #e3e3e3;
+}
+
+.drag-highlight {
+    background-color: #f0f0f0;
+}
